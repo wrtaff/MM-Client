@@ -14,6 +14,9 @@ public class ClientProgram {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		
+		String hostName = args[0];
 
 		String server = "127.0.0.1";
 		Integer servPort = 30000;
@@ -47,14 +50,14 @@ public class ClientProgram {
 			
 			if (textReceived.compareTo("#GETNAME")==0 ){
 				
-				outPrintStream.println("NAME=ALICE");
+				outPrintStream.println("NAME=" + hostName);
 				outPrintStream.println("STATUS=HELLO");	
 				
 			}
 			
 			
 			//and then start looping!  
-			
+			//keep checking inbox
 			while ( textReceived.compareTo("HALT")!=0 ){
 				
 				outPrintStream.println("GETINBOX");
@@ -65,8 +68,7 @@ public class ClientProgram {
 				
 				System.out.println(textReceived);
 				
-				//keep checking inbox
-				
+			
 				
 				
 			}
@@ -74,6 +76,8 @@ public class ClientProgram {
 			
 			
 			outPrintStream.println("QUIT");
+			
+			Thread.sleep(1000);
 			
 			socket.close();
 			
