@@ -13,8 +13,10 @@ public class ClientProgram {
 	/**
 	 * @param args
 	 */
+	
+	//TODO - whole class needs documentation!
+	//TODO - add data members like hostname and server etc...
 	public static void main(String[] args) {
-		
 		
 		String hostName = args[0];
 
