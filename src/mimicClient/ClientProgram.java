@@ -36,10 +36,16 @@ public class ClientProgram {
 		
 		//INITIALIZATION PARAMS
 		String hostName = args[0];
-
-		String server = "127.0.0.1";
+		System.out.println(args[0]);
 		
-		Integer servPort = 30000;
+		//String server = "127.0.0.1";
+		String server = args[1];
+		System.out.println(args[1]);
+		
+		//Integer servPort = 30000;
+		Integer servPort = Integer.parseInt(args[2]);
+		System.out.println(servPort);
+		
 		
 		Runtime r = Runtime.getRuntime();
 		
@@ -47,11 +53,15 @@ public class ClientProgram {
 		
 		String status = "IDLE";
 		
+		String os_name = null;
+		
+		
 		//initialize socket connection
 		try {
 			
-			String properties = System.getProperty("os.name");
-			System.out.println("OS=" + properties);
+			os_name  = System.getProperty("os.name");
+			System.out.println("OS=" + os_name);
+			
 						
 			Socket socket = new Socket(server,servPort);
 			
@@ -90,8 +100,7 @@ public class ClientProgram {
 			}
 			
 			
-			//and then start looping!  
-			//keep checking inbox
+			//and then start looping and keep checking inbox
 			while ( textReceived.compareTo("HALT")!=0 ){
 				
 				outPrintStream.println("GETINBOX");
@@ -113,7 +122,7 @@ public class ClientProgram {
 				if ( textReceived.compareTo("MOD_1")==0 ){
 					
 					//TODO RUN MOD 1
-					mod_1(r);
+					mod_1(r, os_name);
 					
 					status = "MOD_1";
 					outPrintStream.println(status);
@@ -177,21 +186,32 @@ public class ClientProgram {
 
 	/**
 	 * A 5 ping module.
-	 * pings google (8.8.8.8) 5 times then stops.  
+	 * pings server 5 times then stops.  
 	 * 
 	 * @param r
+	 * @param osName 
 	 */
-	private static void mod_1(Runtime r) {
+	private static void mod_1(Runtime r, String osName) {
 		// TODO Auto-generated method stub
 		
 		System.out.println("Running Mod 1");
 		
 		try {
 			
-			Process p = r.exec("/bin/ping -c5 8.8.8.8"); //works linux
-			//Process p = r.exec("/bin/ls"); // works Linux
+			Process p;
 			
-
+			if (osName.contains("Linux")) {
+			
+				p = r.exec("/bin/ping -c5 127.0.0.1"); //works linux
+				//Process p = r.exec("/bin/ls"); // works Linux
+			
+			}
+			
+			else { //is windows
+				
+				p = r.exec("ping -n 5 127.0.0.1");
+				
+			}
 			
 			InputStream in = p.getInputStream();
 			BufferedInputStream buf = new BufferedInputStream(in);
