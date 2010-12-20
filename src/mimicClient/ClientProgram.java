@@ -8,6 +8,19 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+
+
+
+/**
+ * The MM-Client software for remote host.
+ * So far, a single class that handles both sides of 
+ * communication with the remote server (up and down) as 
+ * well as local execution of remotely (server) commanded
+ * methods.  
+ * 
+ * @author W. Taff and P. Salevski
+ *
+ */
 public class ClientProgram {
 
 	/**
