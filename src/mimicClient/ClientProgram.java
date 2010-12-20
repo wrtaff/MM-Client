@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -49,8 +50,14 @@ public class ClientProgram {
 		//initialize socket connection
 		try {
 			
+			String properties = System.getProperty("os.name");
+			System.out.println("OS=" + properties);
 						
 			Socket socket = new Socket(server,servPort);
+			
+			//hostname of local machine:
+			InetAddress localMachine = InetAddress.getLocalHost();
+			System.out.println("Local Hostname=" + localMachine);
 			
 			System.out.println("Connected to Server " +
 					".. waiting for #GETNAME") ;
@@ -109,6 +116,9 @@ public class ClientProgram {
 					mod_1(r);
 					
 					status = "MOD_1";
+					outPrintStream.println(status);
+					
+					
 					
 				}
 				
@@ -118,6 +128,9 @@ public class ClientProgram {
 					//TODO RUN MOD 2
 					System.out.println("Running Mod 2");
 					status = "MOD_2";
+					outPrintStream.println(status);
+
+					
 					
 				}
 				
@@ -129,7 +142,7 @@ public class ClientProgram {
 			
 			
 			//CLOSE CONNECTION
-			outPrintStream.println("QUIT");
+			outPrintStream.println("CLOSING...");
 			
 			Thread.sleep(1000);
 			
@@ -164,7 +177,7 @@ public class ClientProgram {
 
 	/**
 	 * A 5 ping module.
-	 * pings google 5 times then stops.  
+	 * pings google (8.8.8.8) 5 times then stops.  
 	 * 
 	 * @param r
 	 */
@@ -174,9 +187,11 @@ public class ClientProgram {
 		System.out.println("Running Mod 1");
 		
 		try {
-			Process p = r.exec("/bin/ping -c5 8.8.8.8"); //works linux
-			//Process p = r.exec("/bin/ls"); //this works Linux
 			
+			Process p = r.exec("/bin/ping -c5 8.8.8.8"); //works linux
+			//Process p = r.exec("/bin/ls"); // works Linux
+			
+
 			
 			InputStream in = p.getInputStream();
 			BufferedInputStream buf = new BufferedInputStream(in);
@@ -210,10 +225,16 @@ public class ClientProgram {
 		
 	}
 
+	/**
+	 * Sends a status update message to the server.  
+	 * 
+	 * @param outPrintStream
+	 * @param status
+	 */
 	private static void mod_0(PrintStream outPrintStream, 
-												String Status) {
+												String status) {
 		
-		outPrintStream.println("STATUS=status");	
+		outPrintStream.println("STATUS=" + status);	
 		
 	}
 
