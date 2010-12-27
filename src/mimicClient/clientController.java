@@ -70,7 +70,9 @@ public class clientController {
 	}
 
 
-
+	//TODO **make so reconnects following loss of cxn w/ server
+	//TODO **fix error in server that unexpected termination of client spins it.
+	
 
 	public void run() throws Exception {
 		
