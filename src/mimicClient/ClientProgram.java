@@ -114,6 +114,8 @@ public class ClientProgram {
 				
 				if ( textReceived.compareTo("MOD_0")==0 ){
 					
+					status = "MOD_0";
+					
 					mod_0(outPrintStream, status);
 				
 					
@@ -125,7 +127,7 @@ public class ClientProgram {
 					mod_1(r, os_name);
 					
 					status = "MOD_1";
-					outPrintStream.println(status);
+					outPrintStream.println("STATUS=" + status);
 					
 					
 					
@@ -137,7 +139,7 @@ public class ClientProgram {
 					//TODO RUN MOD 2
 					System.out.println("Running Mod 2");
 					status = "MOD_2";
-					outPrintStream.println(status);
+					outPrintStream.println("STATUS=" + status);
 
 					
 					
