@@ -81,10 +81,7 @@ public class clientController {
 		String textReceived = "";		
 		
 		//initialize socket connection
-		try {
-			
 
-			
 			
 			//and then start looping and keep checking inbox
 			while ( textReceived.compareTo("HALT")!=0 ){
@@ -100,25 +97,19 @@ public class clientController {
 				
 				if ( textReceived.compareTo("MOD_0")==0 ){
 					
-					status = "MOD_0";
-					
-					mod_0(outPrintStream, status);
-				
+					status=("MOD_0");
+					mod_0();
 					
 				}
 				
 				if ( textReceived.compareTo("MOD_1")==0 ){
 					
 					//TODO RUN MOD 1
-					mod_1(localRuntime, os_name);
-					
+					mod_1();
 					status = "MOD_1";
 					outPrintStream.println("STATUS=" + status);
-					
-					
-					
-				}
-				
+
+				}			
 				
 				if ( textReceived.compareTo("MOD_2")==0 ){
 					
@@ -127,12 +118,8 @@ public class clientController {
 					status = "MOD_2";
 					outPrintStream.println("STATUS=" + status);
 
-					
-					
 				}
 				
-				
-			
 
 				
 			}
@@ -144,28 +131,7 @@ public class clientController {
 			Thread.sleep(1000);
 			
 			socket.close();
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception f){
-			f.printStackTrace();
-		}
+
 		
 		
 	}
@@ -207,11 +173,8 @@ public class clientController {
 	/**
 	 * A 5 ping module.
 	 * pings server 5 times then stops.  
-	 * 
-	 * @param r
-	 * @param osName 
 	 */
-	private void mod_1(Runtime r, String osName) {
+	private void mod_1() {
 		// TODO Auto-generated method stub
 		
 		System.out.println("Running Mod 1");
@@ -220,16 +183,16 @@ public class clientController {
 			
 			Process p;
 			
-			if (osName.contains("Linux")) {
+			if (os_name.contains("Linux")) {
 			
-				p = r.exec("/bin/ping -c5 127.0.0.1"); //works linux
+				p = localRuntime.exec("/bin/ping -c5 127.0.0.1");
 				//Process p = r.exec("/bin/ls"); // works Linux
 			
 			}
 			
 			else { //is windows
 				
-				p = r.exec("ping -n 5 127.0.0.1");
+				p = localRuntime.exec("ping -n 5 127.0.0.1");
 				
 			}
 			
@@ -247,7 +210,9 @@ public class clientController {
 			
 			try {
 				if (p.waitFor() != 0) {
-					System.err.println("exit value = " + p.exitValue());
+					
+					System.err.println(
+							"exit value = " + p.exitValue());
 				}
 			}
 			catch (InterruptedException e) {
@@ -268,11 +233,9 @@ public class clientController {
 	/**
 	 * Sends a status update message to the server.  
 	 * 
-	 * @param outPrintStream
 	 * @param status
 	 */
-	private void mod_0(PrintStream outPrintStream, 
-												String status) {
+	private void mod_0() {
 		
 		outPrintStream.println("STATUS=" + status);	
 		
