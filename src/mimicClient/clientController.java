@@ -61,7 +61,7 @@ public class clientController {
 		
 		localRuntime = Runtime.getRuntime();
 		
-		status = "IDLE";
+		status = "READY";
 		
 		localMachine = InetAddress.getLocalHost();
 		
