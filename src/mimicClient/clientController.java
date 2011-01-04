@@ -79,9 +79,6 @@ public class clientController {
 		initializeConnection();
 		
 		String textReceived = "";		
-		
-		//initialize socket connection
-
 			
 			//and then start looping and keep checking inbox
 			while ( textReceived.compareTo("HALT")!=0 ){
@@ -95,25 +92,13 @@ public class clientController {
 				System.out.println(textReceived);
 				
 				
-				if ( textReceived.compareTo("MOD_0")==0 ){
+				if ( textReceived.compareTo("MOD_0")==0 ) mod_0();
 					
-					status=("MOD_0");
-					mod_0();
-					
-				}
 				
-				if ( textReceived.compareTo("MOD_1")==0 ){
-					
-					//TODO RUN MOD 1
-					mod_1();
-					status = "MOD_1";
-					outPrintStream.println("STATUS=" + status);
-
-				}			
+				if ( textReceived.compareTo("MOD_1")==0 ) mod_1();
 				
 				if ( textReceived.compareTo("MOD_2")==0 ){
-					
-					//TODO RUN MOD 2
+					//TODO BUILD MOD 2
 					System.out.println("Running Mod 2");
 					status = "MOD_2";
 					outPrintStream.println("STATUS=" + status);
@@ -176,8 +161,11 @@ public class clientController {
 	 */
 	private void mod_1() {
 		// TODO Auto-generated method stub
+				
+		status = "MOD_1";
 		
-		System.out.println("Running Mod 1");
+		outPrintStream.println("STATUS=" + status);
+	
 		
 		try {
 			
@@ -237,6 +225,7 @@ public class clientController {
 	 */
 	private void mod_0() {
 		
+		status=("MOD_0");
 		outPrintStream.println("STATUS=" + status);	
 		
 	}	

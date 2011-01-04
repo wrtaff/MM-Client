@@ -15,10 +15,10 @@ package mimicClient;
 public class ClientProgram {
 
 	/**
+	 * Top level main() for program.  
 	 * @param args
 	 */
 	
-	//TODO - whole class needs documentation!
 	public static void main(String[] args) {
 		
 		
