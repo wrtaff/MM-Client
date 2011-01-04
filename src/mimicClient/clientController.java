@@ -4,7 +4,16 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 
+/**
+ * Controller class for the Malware Mimic client.  
+ * Started by 
+ * 
+ * @author W. Taff and P. Salevski
+ *
+ */
 public class clientController {
+	
+	
 	
 	///////////////////////////////////////////
 	//DATA MEMBERS 
@@ -30,17 +39,21 @@ public class clientController {
 	
 	
 	
+	
+	
+	
 	///////////////////////////////////////////
 	//METHODS 
 	///////////////////////////////////////////
 
 	/**
-	 * @param serverPort 
-	 * @param serverAddr 
-	 * @param hostName 
+	 * @param serverPort the port of the remote server to use
+	 * @param serverAddr the string dotted-quad server address
+	 * @param hostName the hostname of local machine; will append
 	 * @throws Exception 
 	 * 
 	 */
+	
 	public clientController(String hostName, 
 			String serverAddr, int serverPort) throws Exception {
 		
@@ -65,29 +78,34 @@ public class clientController {
 
 	
 
+	/**
+	 * Main body of the clientController.
+	 * Loops until receives a halt command, checking the inbox 
+	 * located on the remote server, and executing any commands. 
+	 * 
+	 * @throws Exception
+	 */
 	public void run() throws Exception {
 		
 		initializeConnection();
 		
-		String textReceived = "";		
-			
 			//and then start looping and keep checking inbox
-			while ( textReceived.compareTo("HALT")!=0 ){
+			while ( textReceiveBuf.compareTo("HALT")!=0 ){
 				
 				outPrintStream.println("GETINBOX");
 				
 				Thread.sleep(5000);
 				
-				textReceived = inBufferedReader.readLine();
+				textReceiveBuf = inBufferedReader.readLine();
 				
-				System.out.println(textReceived);
+				System.out.println(textReceiveBuf);
 				
 				
-				if ( textReceived.compareTo("MOD_0")==0 ) mod_0();
+				if ( textReceiveBuf.compareTo("MOD_0")==0 ) mod_0();
 				
-				if ( textReceived.compareTo("MOD_1")==0 ) mod_1();
+				if ( textReceiveBuf.compareTo("MOD_1")==0 ) mod_1();
 				
-				if ( textReceived.compareTo("MOD_2")==0 ){
+				if ( textReceiveBuf.compareTo("MOD_2")==0 ){
 					//TODO BUILD MOD 2 - hping?  
 					System.out.println("Running Mod 2");
 					status = "MOD_2";
@@ -110,6 +128,19 @@ public class clientController {
 		
 	}
 	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Initializes the connection with the remote host.
+	 * Called by run(), connects with the remote host, and upon
+	 * connection, sends initialization parameters to the server.
+	 * 
+	 * @throws Exception
+	 */
 	private void initializeConnection() throws Exception {
 		
 		System.out.println("Connected ... waiting for #GETNAME") ;
@@ -146,7 +177,7 @@ public class clientController {
 
 	/**
 	 * A 5 ping module.
-	 * pings server 5 times then stops.  
+	 * Pings server 5 times then stops.  
 	 */
 	private void mod_1() {
 				
@@ -207,10 +238,17 @@ public class clientController {
 		
 	}
 
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Sends a status update message to the server.  
+	 * Equivalent to an idle command.  
 	 * 
-	 * @param status
 	 */
 	private void mod_0() {
 		

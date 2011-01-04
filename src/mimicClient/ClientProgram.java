@@ -29,11 +29,19 @@ package mimicClient;
  *
  */
 public class ClientProgram {
+	
+	
+	
+	
 	/**
 	 * Top level main() for program.  
-	 * @param args
+	 * Loops, starting clientController with each iteration.  If
+	 * clientController dies, handles that exception, and restarts.
+	 * So far, is self perpetuating - i.e., will loop until killed 
+	 * externally.   
+	 * 
+	 * @param args hostName, server addr, and server port
 	 */
-	
 	public static void main(String[] args) {
 		
 		//TODO change input params to use local host addr, instead of input host?  
@@ -45,7 +53,6 @@ public class ClientProgram {
 
 				new clientController(args[0], args[1], Integer
 						.parseInt(args[2])).run();
-				
 
 			} catch (NumberFormatException e) {
 
@@ -58,7 +65,6 @@ public class ClientProgram {
 				f.printStackTrace();
 				
 			}
-			
 			
 			catch (Exception e) {
 
@@ -79,7 +85,6 @@ public class ClientProgram {
 				}
 				
 			}
-	
 			
 		}//end while
 		
