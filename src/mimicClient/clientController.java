@@ -3,7 +3,6 @@ package mimicClient;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class clientController {
 	
@@ -12,10 +11,6 @@ public class clientController {
 	///////////////////////////////////////////
 	
 	private String hostName;
-	
-	private String serverAddr;
-	
-	private int serverPort;
 	
 	private String os_name;
 
@@ -51,12 +46,6 @@ public class clientController {
 		
 		super();
 		
-		this.hostName = hostName;
-		
-		this.serverAddr = serverAddr;
-		
-		this.serverPort = serverPort;
-		
 		os_name  = System.getProperty("os.name");
 		
 		localRuntime = Runtime.getRuntime();
@@ -66,6 +55,10 @@ public class clientController {
 		localMachine = InetAddress.getLocalHost();
 		
 		socket = new Socket(serverAddr,serverPort);
+		
+		this.hostName = hostName + localMachine.getHostName();
+		
+		
 		
 	}
 
