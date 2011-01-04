@@ -44,7 +44,6 @@ public class ClientProgram {
 	 */
 	public static void main(String[] args) {
 		
-		//TODO change input params to use local host addr, instead of input host?  
 
 		
 		while (true) {
