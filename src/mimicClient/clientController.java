@@ -70,8 +70,6 @@ public class clientController {
 	}
 
 
-	//TODO **make so reconnects following loss of cxn w/ server
-	//TODO **fix error in server that unexpected termination of client spins it.
 	
 
 	public void run() throws Exception {
@@ -97,13 +95,12 @@ public class clientController {
 				if ( textReceived.compareTo("MOD_1")==0 ) mod_1();
 				
 				if ( textReceived.compareTo("MOD_2")==0 ){
-					//TODO BUILD MOD 2
+					//TODO BUILD MOD 2 - hping?  
 					System.out.println("Running Mod 2");
 					status = "MOD_2";
 					outPrintStream.println("STATUS=" + status);
 
 				}
-				
 
 				
 			}//end while
@@ -121,7 +118,6 @@ public class clientController {
 	}
 	
 	private void initializeConnection() throws Exception {
-		// TODO Auto-generated method stub
 		
 		System.out.println("Connected ... waiting for #GETNAME") ;
 
@@ -130,7 +126,7 @@ public class clientController {
 		inBufferedReader = new BufferedReader(
 					new InputStreamReader(socket.getInputStream()));
 
-		//GIVET TIME FOR INITIAL COMMAND TO ARRIVE
+		//GIVE TIME FOR INITIAL COMMAND TO ARRIVE
 		Thread.sleep(1000);
 
 
@@ -145,6 +141,7 @@ public class clientController {
 			
 			outPrintStream.println("NAME=" + hostName);
 			outPrintStream.println("STATUS=" + status);	
+			//TODO - also tell it exercise name
 			
 		}
 		
@@ -159,7 +156,6 @@ public class clientController {
 	 * pings server 5 times then stops.  
 	 */
 	private void mod_1() {
-		// TODO Auto-generated method stub
 				
 		status = "MOD_1";
 		
@@ -208,8 +204,9 @@ public class clientController {
 
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			
 		}
 		
 		System.out.println("Mod 1 Iteration Complete");

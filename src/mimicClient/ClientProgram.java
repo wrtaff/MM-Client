@@ -29,7 +29,6 @@ package mimicClient;
  *
  */
 public class ClientProgram {
-	//TODO change input params to use local host addr, instead of input host?  
 	/**
 	 * Top level main() for program.  
 	 * @param args
@@ -37,6 +36,8 @@ public class ClientProgram {
 	
 	public static void main(String[] args) {
 		
+		//TODO change input params to use local host addr, instead of input host?  
+
 		
 		while (true) {
 			
