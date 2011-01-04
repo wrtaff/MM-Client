@@ -93,7 +93,6 @@ public class clientController {
 				
 				
 				if ( textReceived.compareTo("MOD_0")==0 ) mod_0();
-					
 				
 				if ( textReceived.compareTo("MOD_1")==0 ) mod_1();
 				
@@ -107,7 +106,7 @@ public class clientController {
 				
 
 				
-			}
+			}//end while
 			
 			
 			//CLOSE CONNECTION

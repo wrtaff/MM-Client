@@ -22,23 +22,55 @@ public class ClientProgram {
 	public static void main(String[] args) {
 		
 		
-		
-		try {
+		//TODO - how can I eject from this loop?  
+		//
+		while (true) {
 			
-			new clientController(
-				args[0], args[1], Integer.parseInt(args[2]) ).run();
+			try {
+
+				new clientController(args[0], args[1], Integer
+						.parseInt(args[2])).run();
+
+			} catch (NumberFormatException e) {
+
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			} 
 			
-		} catch (NumberFormatException e) {
+			catch (NullPointerException f) {
+				
+				f.printStackTrace();
+				
+			}
 			
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			
-		} catch (Exception e) {
 			
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			catch (Exception e) {
+
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			}
 			
-		}
+			finally {
+				
+				try {
+					
+					Thread.sleep(10000);
+					
+				} catch (InterruptedException e) {
+					
+					e.printStackTrace();
+					
+				}
+				
+			}
+			
+			
+			
+			
+		}//end while
 		
 	}// end main()
 
