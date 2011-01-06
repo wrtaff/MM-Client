@@ -36,6 +36,10 @@ public class clientController {
 	private BufferedReader inBufferedReader;
 
 	private PrintStream outPrintStream;
+
+	private String serverAddr;
+
+	private int serverPort;
 	
 	
 	
@@ -70,6 +74,10 @@ public class clientController {
 		socket = new Socket(serverAddr,serverPort);
 		
 		this.hostName = hostName + localMachine.getHostName();
+		
+		this.serverAddr = serverAddr;
+		
+		this.serverPort = serverPort;
 		
 		
 		
@@ -192,14 +200,14 @@ public class clientController {
 			
 			if (os_name.contains("Linux")) {
 			
-				p = localRuntime.exec("/bin/ping -c5 127.0.0.1");
+				p = localRuntime.exec("/bin/ping -c5 " + serverAddr);
 				//Process p = r.exec("/bin/ls"); // works Linux
 			
 			}
 			
 			else { //is windows
 				
-				p = localRuntime.exec("ping -n 5 127.0.0.1");
+				p = localRuntime.exec("ping -n 5 " + serverAddr);
 				
 			}
 			
