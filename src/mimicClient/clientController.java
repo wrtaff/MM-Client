@@ -113,11 +113,7 @@ public class clientController {
 				
 				if ( textReceiveBuf.compareTo("MOD_1")==0 ) mod_1();
 				
-				if ( textReceiveBuf.compareTo("MOD_2")==0 ){
-					//TODO BUILD MOD 2 - hping?  
-					System.out.println("Running Mod 2");
-					status = "MOD_2";
-					outPrintStream.println("STATUS=" + status);
+				if ( textReceiveBuf.compareTo("MOD_2")==0 ){mod_2();
 
 				}
 
@@ -179,6 +175,73 @@ public class clientController {
 		
 		
 	}// end initializeConnection()
+	
+	
+	private void mod_2() throws InterruptedException {
+		
+		status=("MOD_2");
+		outPrintStream.println("STATUS=" + status);	
+		
+		try {
+			
+			Process p = null;
+			
+			if (os_name.contains("Linux")) {
+				
+				for (int i=80; i < 85 ; i++){
+					p = localRuntime.exec("/usr/bin/sudo " +
+							"/usr/sbin/hping3 -c 2 -s 5678 -p "+i +" -S "+serverAddr);
+					System.out.println(i);
+					Thread.sleep(3000);
+				
+				}
+				
+			}
+			
+			else { //is windows
+				
+				p = localRuntime.exec("ping -n 5 " + serverAddr);
+				
+			}
+			
+			InputStream in = p.getInputStream();
+			BufferedInputStream buf = new BufferedInputStream(in);
+			InputStreamReader inread = new InputStreamReader(buf);
+			BufferedReader bufferedReader = new BufferedReader(inread);
+			
+			String line;
+			
+			while ((line = bufferedReader.readLine()) != null) {
+				
+				System.out.println(line);
+				
+			}
+			
+			try {
+				if (p.waitFor() != 0) {
+					
+					System.err.println(
+							"exit value = " + p.exitValue());
+				}
+			}
+			catch (InterruptedException e) {
+				System.err.println(e);
+			}
+
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		System.out.println("Mod 2 Iteration Complete");
+		
+		
+		
+		
+		
+	}
 
 
 
@@ -201,7 +264,6 @@ public class clientController {
 			if (os_name.contains("Linux")) {
 			
 				p = localRuntime.exec("/bin/ping -c5 " + serverAddr);
-				//Process p = r.exec("/bin/ls"); // works Linux
 			
 			}
 			
@@ -217,6 +279,7 @@ public class clientController {
 			BufferedReader bufferedReader = new BufferedReader(inread);
 			
 			String line;
+			
 			while ((line = bufferedReader.readLine()) != null) {
 				
 				System.out.println(line);
