@@ -50,7 +50,7 @@ public class ClientProgram {
 			
 			try {
 
-				new clientController(args[0], args[1], Integer
+				new ClientController(args[0], args[1], Integer
 						.parseInt(args[2])).run();
 
 			} catch (NumberFormatException e) {
