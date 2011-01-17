@@ -3,6 +3,7 @@ package mimicClient;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Random;
 
 /**
  * Controller class for the Malware Mimic client.  
@@ -179,8 +180,8 @@ public class ClientController {
 	
 	
 	/**
-	 * A hping scan from port 80 to 85.
-	 * Scans server repeatedly from port 80 to port 85.
+	 * A hping scan of 10 sequential ports from a random start port.
+	 * Scans server in range of 1 to 1024.  
 	 * @throws InterruptedException
 	 */
 	private void mod_2() throws InterruptedException {
@@ -188,36 +189,45 @@ public class ClientController {
 		status=("MOD_2");
 		outPrintStream.println("STATUS=" + status);	
 		
+		int randomPort = new Random().nextInt(1014) + 1;
+
+
+		
 		try {
 			
 			Process p = null;
 			
 			if (os_name.contains("Linux")) {
 				
-				for (int i=80; i < 85 ; i++){
 					p = localRuntime.exec("/usr/bin/sudo " +
-							"/usr/sbin/hping3 -c 2 -s 5678 -p "+i +" -S "+serverAddr);
-					System.out.println(i);
-					Thread.sleep(1000);
-				
-				}
+							"/usr/sbin/hping3 -c 10 -s 1 -p "+ 
+							randomPort + " -S " + serverAddr);
+					
+					randomPort++;
+					
+					System.out.println(randomPort);
 				
 			}
 			
 			else { //is windows
-				//TODO: need add windows hping command
-				p = localRuntime.exec("ping -n 5 " + serverAddr);
+		
+					
+					p = localRuntime.exec("hping -c 10 -s 1 -p "
+							+ randomPort +" -S "+serverAddr);
+					
+				
+					System.out.println(randomPort);
 				
 			}
 			
-			InputStream in = p.getInputStream();
-			BufferedInputStream buf = new BufferedInputStream(in);
-			InputStreamReader inread = new InputStreamReader(buf);
-			BufferedReader bufferedReader = new BufferedReader(inread);
+			
+			BufferedReader buffRdr = new BufferedReader(
+					new InputStreamReader(new BufferedInputStream(
+							p.getInputStream())));
 			
 			String line;
 			
-			while ((line = bufferedReader.readLine()) != null) {
+			while ((line = buffRdr.readLine()) != null) {
 				
 				System.out.println(line);
 				
@@ -279,14 +289,13 @@ public class ClientController {
 				
 			}
 			
-			InputStream in = p.getInputStream();
-			BufferedInputStream buf = new BufferedInputStream(in);
-			InputStreamReader inread = new InputStreamReader(buf);
-			BufferedReader bufferedReader = new BufferedReader(inread);
+			BufferedReader buffRdr = new BufferedReader(
+					new InputStreamReader(new BufferedInputStream(
+							p.getInputStream())));
 			
 			String line;
 			
-			while ((line = bufferedReader.readLine()) != null) {
+			while ((line = buffRdr.readLine()) != null) {
 				
 				System.out.println(line);
 				
