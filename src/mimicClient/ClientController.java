@@ -221,28 +221,6 @@ public class ClientController {
 			}
 			
 			
-//			BufferedReader buffRdr = new BufferedReader(
-//					new InputStreamReader(new BufferedInputStream(
-//							p.getInputStream())));
-//			
-//			String line;
-//			
-//			while ((line = buffRdr.readLine()) != null) {
-//				
-//				System.out.println(line);
-//				
-//			}
-//			
-//			try {
-//				if (p.waitFor() != 0) {
-//					
-//					System.err.println(
-//							"exit value = " + p.exitValue());
-//				}
-//			}
-//			catch (InterruptedException e) {
-//				System.err.println(e);
-//			}
 
 			
 		} catch (IOException e) {
