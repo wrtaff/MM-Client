@@ -8,11 +8,16 @@
 /*                                                         		*/
 /*      FILE:       ClientProgram.java			                */
 /*                                                              */
-/*      USAGE:      ./MM-Client hostname serverName serverPort  */
+/*      USAGE: ./MM-Client hostname exerciseId srvrName srvrPort*/
 /*                                                              */
 /*          hostname      name of host                          */
 /*          serverName    IP addr of server, in dotted quad     */
 /*          serverPort 	  Integer port number of remote server  */
+/*                                                              */
+/*			AUTHORS: W. Taff and P. Salevski                    */
+/*                                                              */
+/*			DATE: 22 January 2011			                    */
+/*                                                              */
 /*                                                              */
 /****************************************************************/
 
@@ -40,24 +45,42 @@ public class ClientProgram {
 	 * So far, is self perpetuating - i.e., will loop until killed 
 	 * externally.   
 	 * 
-	 * @param args hostName, server addr, and server port
+	 * @param args hostName, exercise Id, server IP.addr, server port
 	 */
 	public static void main(String[] args) {
-		
+			
 
 		
 		while (true) {
 			
 			try {
 
-				new ClientController(args[0], args[1], Integer
-						.parseInt(args[2])).run();
+				new ClientController(args[0], args[1], args[2], Integer
+						.parseInt(args[3])).run();
 
 			} catch (NumberFormatException e) {
 
 				e.printStackTrace();
 
+				System.out.println("Check your parameters!\n" +
+						"Expect hostId exerciseID serverIP.addr " +
+						"serverIP.port" );
+
+				System.exit(2);
+				
 			} 
+			
+			catch (ArrayIndexOutOfBoundsException e) {
+		
+				e.printStackTrace();
+				
+				System.out.println("Check your parameters!\n" +
+						"Expect hostId exerciseID serverIP.addr " +
+						"serverIP.port" );
+				
+				System.exit(2);
+		
+			}
 			
 			catch (NullPointerException f) {
 				

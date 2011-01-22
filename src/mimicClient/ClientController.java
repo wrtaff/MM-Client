@@ -23,6 +23,8 @@ public class ClientController {
 	private String hostName;
 	
 	private String os_name;
+	
+	private String exerciseID ; 
 
 	private Runtime localRuntime;
 
@@ -56,11 +58,12 @@ public class ClientController {
 	 * @param serverPort the port of the remote server to use
 	 * @param serverAddr the string dotted-quad server address
 	 * @param hostName the hostname of local machine; will append
+	 * @param exerciseID 
 	 * @throws Exception 
 	 * 
 	 */
 	
-	public ClientController(String hostName, 
+	public ClientController(String hostName, String exerciseID, 
 			String serverAddr, int serverPort) throws Exception {
 		
 		super();
@@ -81,8 +84,8 @@ public class ClientController {
 		
 		this.serverPort = serverPort;
 		
-		
-		
+		this.exerciseID = exerciseID;
+
 	}
 
 
@@ -115,11 +118,9 @@ public class ClientController {
 				
 				if ( textReceiveBuf.compareTo("MOD_1")==0 ) mod_1();
 				
-				if ( textReceiveBuf.compareTo("MOD_2")==0 ){mod_2();
+				if ( textReceiveBuf.compareTo("MOD_2")==0 ) mod_2();
 
-				}
-
-				
+								
 			}//end while
 			
 			
@@ -130,9 +131,11 @@ public class ClientController {
 			
 			socket.close();
 
-		
-		
-	}
+	
+	}//end run()
+	
+	
+	
 	
 	
 	
@@ -161,22 +164,31 @@ public class ClientController {
 
 
 		if (inBufferedReader.ready()) {
+			
 			textReceiveBuf = inBufferedReader.readLine();
 			System.out.println(textReceiveBuf);
+			
 		}
 
-		//if server says getname, then tell it hostName, and status
+		//if server says getname, tell it
 
 		if (textReceiveBuf.compareTo("#GETNAME")==0 ){
 			
 			outPrintStream.println("NAME=" + hostName);
 			outPrintStream.println("STATUS=" + status);	
-			//TODO - also tell it exercise name
+			outPrintStream.println("EXERCISE=" + exerciseID);
 			
 		}
 		
 		
 	}// end initializeConnection()
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -187,6 +199,7 @@ public class ClientController {
 	private void mod_2() throws InterruptedException {
 		
 		status=("MOD_2");
+		
 		outPrintStream.println("STATUS=" + status);	
 		
 		int randomPort = new Random().nextInt(1014) + 1;
@@ -215,14 +228,11 @@ public class ClientController {
 					p = localRuntime.exec("hping -c 10 -s 1 -p "
 							+ randomPort +" -S "+serverAddr);
 					
-				
 					System.out.println(randomPort);
 				
 			}
 			
-			
 
-			
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -232,13 +242,13 @@ public class ClientController {
 		System.out.println("Mod 2 Iteration Complete");
 		
 		
-		
-		
-		
-	}
+	}//end mod_2()
 
 
 
+	
+	
+	
 
 	/**
 	 * A 5 ping module.
@@ -300,12 +310,17 @@ public class ClientController {
 		System.out.println("Mod 1 Iteration Complete");
 
 		
-	}
+	}//end mod_1()
 
 	
 	
 	
 	
+	
+	
+	
+	
+
 	
 	
 	
@@ -317,9 +332,10 @@ public class ClientController {
 	private void mod_0() {
 		
 		status=("MOD_0");
+		
 		outPrintStream.println("STATUS=" + status);	
 		
-	}	
+	}	//end mod_0()
 	
 
 }// end class
